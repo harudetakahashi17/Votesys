@@ -1,0 +1,90 @@
+﻿@page
+@model Votesys.Pages.AdminLoginModel
+@{
+    ViewData["Title"] = "AdminLogin";
+    Layout = "~/Pages/Shared/_LoginLayout.cshtml";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #17a2b8;
+        height: 100vh;
+    }
+    #login .container #login-row #login-column #login-box {
+        margin-top: 20px;
+        max-width: 600px;
+        height: inherit;
+        border: 1px solid #9C9C9C;
+        border-radius: 5px;
+        background-color: #EAEAEA;
+    }
+
+        #login .container #login-row #login-column #login-box #login-form {
+            padding: 20px;
+        }
+
+            #login .container #login-row #login-column #login-box #login-form #register-link {
+                margin-top: -85px;
+            }
+</style>
+
+<div id="login">
+    <h3 class="text-center text-white pt-3">Voting System Administrator</h3>
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form id="login-form" class="form" action="" method="post">
+                        <h3 class="text-center text-info">Admin Login</h3>
+                        <div class="form-group">
+                            <label for="Email" class="text-info">Username:</label><br>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required pattern="^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="text-info">Password:</label><br>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Password" required pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}">
+                            <p class="d-none alert-danger" id="txNote">Password must at least 8 characters long, contains uppercase, lowercase, and numeric.</p>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" id="btnSubmit" name="submit" class="btn btn-info btn-md form-control" value="Login">
+                            @*<button type="button" id="btnSubmit" name="submit" class="btn btn-info btn-md form-control">Login</button>*@
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#btnSubmit').click(function () {
+        var passwd = $('#password').val();
+        var passRgx = new RegExp('(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}');
+        if (passRgx.test(passwd)) {
+            $('#txNote').addClass('d-none');
+        } else {
+            $('#txNote').removeClass('d-none');
+        }
+    })
+    //$('#btnSubmit').click(function () {
+    //    var email = $('#email').val();
+    //    var passwd = $('#password').val();
+    //    var emailRgx = /^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    //    var passRgx = new RegExp('(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}');
+    //    if (email != null && email != '' && passwd != null && passwd != '') {
+    //        if (emailRgx.test(email)) {
+    //            if (passRgx.test(passwd)) {
+    //                $('#login-form').submit();
+    //            } else {
+    //                swal('Error', 'Password must at least 8 characters and contains UpperCase, LowerCase, dan Numeric', 'error');
+    //            }
+    //        } else {
+    //            swal('Error', 'Email is not valid', 'error');
+    //        }
+    //    } else {
+    //        swal('Error', 'Please fill the form', 'error');
+    //    }
+    //})
+</script>

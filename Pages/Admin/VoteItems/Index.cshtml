@@ -1,0 +1,132 @@
+﻿@page
+@model Votesys.Pages.Admin.VoteItems.IndexModel
+
+@{
+    ViewData["Title"] = "Vote Items";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Vote Items</h1>
+
+<p>
+    <a class="btn btn-primary" asp-page="Create">Create New Vote</a>
+</p>
+
+<div class="col-12 border p-3">
+    <table id="DT_load" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th style="text-align:center">Name</th>
+                <th style="text-align:center">Description</th>
+                <th style="text-align:center">Created Date</th>
+                <th style="text-align:center">Supporters Count</th>
+                <th style="text-align:center">Due Date</th>
+                <th style="text-align:center">Category</th>
+                <th style="text-align:center">Action</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Created Date</th>
+                <th>Supporters Count</th>
+                <th>Due Date</th>
+                <th>Category</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+<script>
+    var dataTable;
+    $(document).ready(function () {
+
+        loadDataTable();
+
+    })
+
+    function loadDataTable() {
+        $('#DT_load tfoot th').each(function () {
+            var title = $('#DT_load thead th').eq($(this).index()).text();
+            $(this).html('<input type="text"  class="form-control" placeholder="Find ' + title + '" />');
+        })
+        $('#DT_load tfoot th input').last().remove();
+
+        dataTable = $('#DT_load').DataTable({
+            "ajax": {
+                "url": "/api/voteitem",
+                "type": "GET",
+                "datatype": "json"
+            },
+            "columns": [
+                { "data": "name" },
+                { "data": "description" },
+                {
+                    "data": "createdDate",
+                    "render": function (data) {
+                        var date = new Date(data);
+                        return (date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes());
+                    }
+                },
+                { "data": "supportCount" },
+                {
+                    "data": "dueDate",
+                    "render": function (data) {
+                        var date = new Date(data);
+                        return (date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes());
+                    }
+                },
+                { "data": "category" },
+                {
+                    "data": "itemID",
+                    "render": function (data) {
+                        return `<div class="text-center">
+                                <a href="/Admin/VoteItems/Edit?id=${data}" class="btn btn-primary btn-sm">Edit</a>
+                                <a class="btn btn-danger btn-sm text-white" onclick=Delete('/api/VoteItem?id=${data}')>Delete</a>
+                                </div>`;
+                    },
+                    "sortable":false
+                }
+            ],
+            "language": {
+                "emptyTable": "No Items Found"
+            },
+            colReorder: true
+        });
+
+        $("#DT_load tfoot input").on('keyup keydown keypress change', function () {
+            dataTable
+                .column($(this).parent().index() + ':visible')
+                .search(this.value)
+                .draw();
+        });
+    }
+
+    function Delete(url) {
+        swal({
+            title: 'Are you sure?',
+            text: 'Data will be deleted permanently',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "DELETE",
+                    url: url,
+                    success: function (data) {
+                        if (data.success) {
+                            swal('Done',data.message, 'success');
+                            dataTable.ajax.reload();
+                        } else {
+                            swal('Error', data.message, 'error');
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>

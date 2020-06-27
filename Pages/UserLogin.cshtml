@@ -1,0 +1,72 @@
+﻿@page
+@model Votesys.Pages.UserLoginModel
+@{
+    ViewData["Title"] = "User Login";
+    Layout = "~/Pages/Shared/_LoginLayout.cshtml";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #17a2b8;
+        height: 100vh;
+    }
+
+    #login .container #login-row #login-column #login-box {
+        margin-top: 20px;
+        max-width: 600px;
+        height: inherit;
+        border: 1px solid #9C9C9C;
+        border-radius: 5px;
+        background-color: #EAEAEA;
+    }
+
+        #login .container #login-row #login-column #login-box #login-form {
+            padding: 20px;
+        }
+
+            #login .container #login-row #login-column #login-box #login-form #register-link {
+                margin-top: -85px;
+            }
+</style>
+
+<div id="login">
+    <h3 class="text-center text-white pt-3">Voting System Administrator</h3>
+    <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form id="login-form" class="form" action="" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <h3 class="text-center text-info">User Login</h3>
+                        <div class="form-group">
+                            <label asp-for="UserModel.Email" class="text-info">Email:</label><br>
+                            <input type="email" asp-for="UserModel.Email" id="email" class="form-control" placeholder="Email Address" required pattern="^\w+([\.-]?\w+)*@@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                            <span asp-validation-for="UserModel.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserModel.Password" class="text-info">Password:</label><br>
+                            <input type="password" asp-for="UserModel.Password" id="password" class="form-control" placeholder="Password" required pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}">
+                            <span asp-validation-for="UserModel.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" id="btnSubmit" name="submit" class="btn btn-info btn-md form-control" value="Login">
+                            @*<button type="button" id="btnSubmit" name="submit" class="btn btn-info btn-md form-control">Login</button>*@
+                        </div>
+                        <div class="text-center">
+                            <p>OR</p>
+                        </div>
+                        <div class="text-center text-muted">
+                            <p>Not have an account yet? Sign up <a asp-page="./Index">here</a>.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+</script>

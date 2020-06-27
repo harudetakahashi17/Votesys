@@ -1,0 +1,63 @@
+﻿@page
+@model Votesys.Pages.Admin.VoteItems.CreateModel
+
+@{
+    ViewData["Title"] = "Create Vote";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    var category = ViewData["cat"] as List<Votesys.Models.CategoryModel>;
+}
+
+<h1>Create Vote</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="VoteItemModel.Name" class="control-label"></label>
+                <input asp-for="VoteItemModel.Name" class="form-control" />
+                <span asp-validation-for="VoteItemModel.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VoteItemModel.Description" class="control-label"></label>
+                <input asp-for="VoteItemModel.Description" class="form-control" />
+                <span asp-validation-for="VoteItemModel.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VoteItemModel.CreatedDate" class="control-label"></label>
+                <input asp-for="VoteItemModel.CreatedDate" class="form-control" value="@(DateTime.Now.ToString("yyyy-MM-dd") + "T" + DateTime.Now.ToString("HH:mm"))" readonly />
+                <span asp-validation-for="VoteItemModel.CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VoteItemModel.SupportCount" class="control-label"></label>
+                <input asp-for="VoteItemModel.SupportCount" class="form-control" min="0" value="0" readonly />
+                <span asp-validation-for="VoteItemModel.SupportCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VoteItemModel.DueDate" class="control-label"></label>
+                <input asp-for="VoteItemModel.DueDate" class="form-control" value="@(DateTime.Now.AddDays(1).ToString("yyyy-MM-dd") + "T" + DateTime.Now.ToString("HH:mm"))" />
+                <span asp-validation-for="VoteItemModel.DueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VoteItemModel.Category" class="control-label"></label>
+                <select asp-for="VoteItemModel.Category" class="form-control">
+                    @foreach (var x in category)
+                    {
+                        <option value="@x.CategoryName">@x.CategoryName</option>
+                    }
+                </select>
+                <span asp-validation-for="VoteItemModel.Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary" asp-page="Index">Back to List</a>
+                <input type="submit" value="Save" class="btn btn-primary float-right" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
