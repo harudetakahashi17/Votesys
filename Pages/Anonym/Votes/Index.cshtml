@@ -7,68 +7,82 @@
     var i = 0;
 }
 
-<h1>Vote List</h1>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: rgb(16, 107, 79);
+        height: 100vh;
+        color: white;
+    }
+</style>
 
-<p>You can select multiple vote items</p>
 
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.VoteItemModel[0].Name)
-            </th>
-            <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.VoteItemModel[0].Description)
-            </th>
-            <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.VoteItemModel[0].CreatedDate)
-            </th>
-            <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.VoteItemModel[0].SupportCount)
-            </th>
-            <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.VoteItemModel[0].DueDate)
-            </th>
-            <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.VoteItemModel[0].Category)
-            </th>
-            <th style="text-align:center">Vote</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.VoteItemModel)
-        {
-            var cbId = "cbVote" + i;
+<div class="container">
+    <h1>Vote List</h1>
+
+    <p>You can select multiple vote items</p>
+    <table class="table table-bordered table-striped table-hover text-white">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td align="center">
-                    @item.CreatedDate.ToString("dd-MM-yyyy HH:mm")
-                </td>
-                <td align="center">
-                    @Html.DisplayFor(modelItem => item.SupportCount)
-                </td>
-                <td align="center">
-                    @item.DueDate.ToString("dd-MM-yyyy HH:mm")
-                </td>
-                <td align="center">
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
-                <td align="center">
-                    @if(DateTime.Now < item.DueDate)
-                    {
-                        <input type="checkbox" id="@cbId" value="@item.ItemID" />
-                    }
-                </td>
+                <th style="text-align: center">
+                    @Html.DisplayNameFor(model => model.VoteItemModel[0].Name)
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(model => model.VoteItemModel[0].Description)
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(model => model.VoteItemModel[0].CreatedDate)
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(model => model.VoteItemModel[0].SupportCount)
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(model => model.VoteItemModel[0].DueDate)
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(model => model.VoteItemModel[0].Category)
+                </th>
+                <th style="text-align:center">Vote</th>
             </tr>
-            i++;
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.VoteItemModel)
+            {
+                var cbId = "cbVote" + i;
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td align="center">
+                        @item.CreatedDate.ToString("dd-MM-yyyy HH:mm")
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelItem => item.SupportCount)
+                    </td>
+                    <td align="center">
+                        @item.DueDate.ToString("dd-MM-yyyy HH:mm")
+                    </td>
+                    <td align="center">
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td align="center">
+                        @if (DateTime.Now < item.DueDate)
+                        {
+                            <input type="checkbox" id="@cbId" value="@item.ItemID" />
+                        }
+                    </td>
+                </tr>
+                i++;
+            }
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-info btn-block" onclick="alert('Voted')">Vote</button>
+</div>
+
 
 
 <script>

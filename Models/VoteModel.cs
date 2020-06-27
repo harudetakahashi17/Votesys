@@ -15,7 +15,7 @@ namespace Votesys.Models
         [Required]
         public int UserID { get; set; }
         [Required]
-        public int ItemID { get; set; }
+        public string ItemID { get; set; }
         public DateTime? CreatedOn { get; set; }
         public int? CreatedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
