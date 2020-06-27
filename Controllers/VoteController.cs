@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace Votesys.Controllers
@@ -48,6 +51,47 @@ namespace Votesys.Controllers
             _db.Vote.Remove(item);
             await _db.SaveChangesAsync();
             return Json(new { success = true, message = "Item has been deleted" });
+        }
+
+        [HttpPost]
+        public ActionResult GetVote(string[] voteId)
+        {
+            var res = false;
+            var sesi = HttpContext.Session.GetString("_Email");
+            if(sesi != null)
+            {
+                var stringConn = "Server=localhost\\SQLEXPRESS; Initial Catalog=Votesys; User ID=admin; Password=Passwd123;";
+                SqlConnection conn = new SqlConnection(stringConn);
+                conn.Open();
+                for (var i = 0;i < voteId.Length; i++)
+                {
+                    try
+                    {
+                        SqlCommand cmd = new SqlCommand("EXEC [dbo].[USP_Vote_Insert] @Voter, @VoteItem", conn);
+                        cmd.Parameters.AddWithValue("@Voter", sesi);
+                        cmd.Parameters.AddWithValue("@VoteItem", voteId[i]);
+                        
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        reader.Read();
+                        if (reader[0].ToString() == "1")
+                        {
+                            res = true;
+                        }
+                        reader.Close();
+                        cmd.Dispose();
+
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
+                conn.Close();
+                return Json(res);
+            } else
+            {
+                return Json(res);
+            }
         }
     }
 }
