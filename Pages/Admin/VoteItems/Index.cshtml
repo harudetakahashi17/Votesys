@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Vote Items";
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    var sesi = ViewData["Session"];
 }
 
 <h1>Vote Items</h1>
@@ -38,12 +39,11 @@
         </tfoot>
     </table>
 </div>
-
-
 <script>
     var dataTable;
     $(document).ready(function () {
-
+        var disp = $('#dispName');
+        disp.text('@sesi');
         loadDataTable();
 
     })

@@ -28,7 +28,7 @@ namespace Votesys
                 Configuration.GetConnectionString("DBConn")));
             services.AddDistributedMemoryCache();
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(30);//You can set Time   
             });
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();

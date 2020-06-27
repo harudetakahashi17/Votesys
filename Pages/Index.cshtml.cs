@@ -21,6 +21,7 @@ namespace Votesys.Pages
 
         public IActionResult OnGet()
         {
+            HttpContext.Session.Clear();
             return Page();
         }
 

@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Create User";
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    var sesi = ViewData["Session"];
 }
 
 <h1>Create</h1>
@@ -59,6 +60,12 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        var disp = $('#dispName');
+        disp.text('@sesi');
+    });
+</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

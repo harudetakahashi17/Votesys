@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Manage User";
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    var sesi = ViewData["Session"];
 }
 
 <h1>Manage Users</h1>
@@ -43,7 +44,8 @@
 <script>
     var dataTable;
     $(document).ready(function () {
-
+        var disp = $('#dispName');
+        disp.text('@sesi');
         loadDataTable();
 
     })

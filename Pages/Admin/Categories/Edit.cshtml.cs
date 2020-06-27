@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -25,6 +26,16 @@ namespace Votesys.Pages.Admin.Categories
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var sesi = base.HttpContext.Session.GetString("_Email");
+            if (sesi == null)
+            {
+                return RedirectToPage("/AdminLogin");
+            }
+            if (sesi != "admin@example.co.id")
+            {
+                return RedirectToPage("/Index");
+            }
+            ViewData["Session"] = sesi;
             if (id == null)
             {
                 return NotFound();

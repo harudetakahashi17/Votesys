@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Edit Category";
     Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+    var sesi = ViewData["Session"];
 }
 
 <h1>Edit Category</h1>
@@ -27,6 +28,12 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        var disp = $('#dispName');
+        disp.text('@sesi');
+    });
+</script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

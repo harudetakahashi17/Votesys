@@ -40,10 +40,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Admin/Users/Index">Manage Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Log Out</a>
+                            <a class="nav-link text-dark" onclick="LogOut()">Log Out</a>
                         </li>
                     </ul>
                 </div>
+                <div class="dispName" id="dispName"></div>
             </div>
         </nav>
     </header>
@@ -64,3 +65,10 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    function LogOut() {
+        sessionStorage.clear();
+        window.location.href = '/Index';
+    }
+</script>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,6 +24,16 @@ namespace Votesys.Pages.Admin.Users
 
         public IActionResult OnGet()
         {
+            var sesi = base.HttpContext.Session.GetString("_Email");
+            if (sesi == null)
+            {
+                return RedirectToPage("/AdminLogin");
+            }
+            if (sesi != "admin@example.co.id")
+            {
+                return RedirectToPage("/Index");
+            }
+            ViewData["Session"] = sesi;
             return Page();
         }
 
